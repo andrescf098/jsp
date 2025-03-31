@@ -3,7 +3,7 @@ body {
 }
 canvas {
   border-bottom: transparent;
-  background: #000;
+  background: url("./assets/bkg.png") repeat;
   margin: 0 auto;
   display: block;
 }
