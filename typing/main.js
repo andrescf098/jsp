@@ -1,6 +1,6 @@
 const $time = document.querySelector("time");
 const $paragraph = document.querySelector("p");
-const $input = document.querySelector("input");
+let $input = document.querySelector("input");
 
 const INITIAL_TIME = 30;
 
@@ -46,7 +46,37 @@ function initEvents() {
   $input.addEventListener("input", onKeyUp);
 }
 
-function onKeyDown(e) {}
+function onKeyDown(e) {
+  const $currentWord = $paragraph.querySelector("word.active");
+  const $currentLetter = $currentWord.querySelector("letter.active");
+
+  const currentWord = $currentWord.innerText.trim();
+  $input.maxLength = currentWord.length;
+  console.log({ value: $input.value, currentWord });
+
+  const $allLetters = $currentWord.querySelectorAll("letter");
+
+  $allLetters.forEach(($letter) =>
+    $letter.classList.remove("correct", "incorrect"),
+  );
+
+  $input.value.split("").forEach((char, index) => {
+    const $letter = $allLetters[index];
+    const letterToCheck = currentWord[index];
+
+    const isCorrect = char === letterToCheck;
+    const letterClass = isCorrect ? "correct" : "incorrect";
+    $letter.classList.add(letterClass);
+  });
+  $currentLetter.classList.remove("active", "is-last");
+  const inputLength = $input.value.length;
+  const nextActiveLetter = $allLetters[inputLength];
+  if (nextActiveLetter) {
+    $allLetters[inputLength].classList.add("active");
+  } else {
+    $currentLetter.classList.add("active", "is-last");
+  }
+}
 function onKeyUp() {}
 
 function gameOver() {
