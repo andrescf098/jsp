@@ -56,6 +56,15 @@ letter {
     left: -65%;
     animation: 1s blink infinite ease-in-out;
   }
+  &.active.is-last::before {
+    left: 65%;
+  }
+  &.correct {
+    color: var(--green);
+  }
+  &.incorrect {
+    color: var(--red);
+  }
 }
 
 @keyframes blink {
