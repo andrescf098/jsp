@@ -67,8 +67,17 @@ letter {
   }
 }
 
+word {
+  border-bottom: 1.5px solid transparent;
+  transition: border-color 0.3s ease;
+
+  &.marked {
+    border-color: var(--red);
+  }
+}
+
 @keyframes blink {
-  0,
+  0%,
   25% {
     opacity: 1;
   }
