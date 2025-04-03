@@ -1,11 +1,15 @@
+import { words as INITIAL_WORDS } from "./data.js";
+
 const $time = document.querySelector("time");
 const $paragraph = document.querySelector("p");
 let $input = document.querySelector("input");
+const $game = document.querySelector("#game");
+const $results = document.querySelector("#results");
+const $wpm = $results.querySelector("#results-wpm");
+const $accuracy = $results.querySelector("#results-accuracy");
+const $reload = $results.querySelector("#reload");
 
 const INITIAL_TIME = 30;
-
-const TEXT =
-  "the quick brown fox jumps over the lazy dog and cat is trying to clone type for fun and profit using vanilla js for the typing test speed";
 
 let words = [];
 let currentTime = INITIAL_TIME;
@@ -14,7 +18,11 @@ initTest();
 initEvents();
 
 function initTest() {
-  words = TEXT.split(" ").slice(0, 32);
+  $results.style.display = "none";
+  $game.style.display = "flex";
+  $input.value = "";
+
+  words = INITIAL_WORDS.toSorted(() => Math.random() - 0.5).slice(0, 32);
   currentTime = INITIAL_TIME;
 
   $time.textContent = currentTime;
@@ -45,6 +53,7 @@ function initEvents() {
   });
   $input.addEventListener("keydown", onKeyDown);
   $input.addEventListener("input", onKeyUp);
+  $reload.addEventListener("click", initTest);
 }
 
 function onKeyDown(e) {
@@ -134,5 +143,17 @@ function onKeyUp() {
 }
 
 function gameOver() {
-  console.log("game over");
+  $game.style.display = "none";
+  $results.style.display = "flex";
+
+  const correctWords = $paragraph.querySelectorAll("word.correct").length;
+  const correctLetters = $paragraph.querySelectorAll("letter.correct").length;
+  const incorrectLetters =
+    $paragraph.querySelectorAll("letter.incorrect").length;
+
+  const totalLetters = correctLetters + incorrectLetters;
+  const accuracy = totalLetters > 0 ? (correctLetters / totalLetters) * 100 : 0;
+  const wpm = (correctWords * 60) / INITIAL_TIME;
+  $wpm.textContent = wpm.toFixed(2);
+  $accuracy.textContent = `${accuracy.toFixed(2)}%`;
 }
