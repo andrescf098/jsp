@@ -6,12 +6,13 @@
     <title>Local LLM-chat</title>
     <link href="./style.css" rel="stylesheet" />
   </head>
+  <script defer src="./main.js"></script>
   <body>
     <main>
       <ul>
         <li class="message bot">
           <span>GPT</span>
-          <span>Esta es la respuesta del bot</span>
+          <p>Esta es la respuesta del bot</p>
         </li>
         <li class="message user">
           <span>Tú</span>
@@ -36,11 +37,10 @@
       <button type="">Enviar</button>
     </form>
     <template id="message-template">
-      <li class="mesasge">
+      <li class="message">
         <span></span>
-        <span></span>
+        <p></p>
       </li>
     </template>
   </body>
-  <script src="./main.js"></script>
 </html>
